@@ -77,13 +77,14 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.baseUrl}/authentication/sign-in`, loginData).pipe(
       map(response => {
         localStorage.setItem('authToken', response.token);
-        const rawRole = response.roles?.[0];
+        const hasOwnerRole = response.roles?.some(r => r === 'ROLE_ARRENDADOR' || r === 'ROLE_OWNER');
         const user: User = {
           id: response.id,
           name: response.name,
           email: response.email,
           password: '',
-          role: this.normalizeRole(rawRole)
+          role: hasOwnerRole ? 'ROLE_OWNER' : this.normalizeRole(response.roles?.[0]),
+          roles: response.roles || []
         };
         return user;
       }),
