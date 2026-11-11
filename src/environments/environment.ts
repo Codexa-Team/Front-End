@@ -3,7 +3,7 @@ const isLocal = typeof window !== 'undefined' && (window.location.hostname === '
 export const environment = {
   production: true,
   // Base URL dynamically adapts to local docker container or cloud Render deployment
-  BASE_URL: isLocal ? 'http://localhost:8082/api/v1' : 'https://back-end-open-source.onrender.com/api/v1',
+  BASE_URL: isLocal ? 'http://localhost:8082/api/v1' : 'https://renticar-backend.onrender.com/api/v1',
 
   // API endpoints
   ENDPOINT_PATH_VEHICLES: '/vehicles',
