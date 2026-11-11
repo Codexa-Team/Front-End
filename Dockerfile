@@ -1,4 +1,4 @@
-# Multi-stage build para Angular Frontend
+# Multi-stage build para Angular Frontend (Docker + Node puro, sin nginx)
 FROM node:20-alpine AS build
 WORKDIR /app
 
@@ -8,11 +8,9 @@ RUN npm install
 COPY . .
 RUN npm run build -- --configuration=production
 
-FROM nginx:alpine
-COPY --from=build /app/dist/renticar-frontend/browser/ /usr/share/nginx/html/
-
-# Configuración SPA inline en default.conf para soportar rutas HTML5 sin archivo externo
-RUN sed -i '/index.html index.htm;/a \        try_files $uri $uri/ /index.html;' /etc/nginx/conf.d/default.conf
-
+FROM node:20-alpine
+WORKDIR /app
+RUN npm install -g http-server
+COPY --from=build /app/dist/renticar-frontend/browser/ ./dist
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["http-server", "dist", "-p", "80", "--spa", "-c-1"]
