@@ -17,27 +17,27 @@ public class SignInStepdefs {
     private final WebDriver webDriver = MyWebDriver.getWebDriver();
     private final WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
-    @Given("El usuario ingresa a la pantalla de inicio de sesion")
-    public void elUsuarioIngresaALaPantallaDeInicioDeSesion() {
+    @Given("the user opens the login page")
+    public void openLoginPage() {
         webDriver.get(MyWebDriver.BASE_URL + "/login");
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email")));
     }
 
-    @When("Ingresa el correo {string} y la contrasena {string}")
-    public void ingresaElCorreoYLaContrasena(String email, String password) {
+    @When("the user enters email {string} and password {string}")
+    public void enterCredentials(String email, String password) {
         webDriver.findElement(By.id("email")).clear();
         webDriver.findElement(By.id("email")).sendKeys(email);
         webDriver.findElement(By.id("password")).clear();
         webDriver.findElement(By.id("password")).sendKeys(password);
     }
 
-    @And("Hace click en el boton Ingresar")
-    public void haceClickEnElBotonIngresar() {
+    @And("the user clicks the Sign In button")
+    public void clickSignInButton() {
         webDriver.findElement(By.cssSelector("button.auth-button[type='submit']")).click();
     }
 
-    @Then("El usuario ingresa a su panel correspondiente en RentiCar")
-    public void elUsuarioIngresaASuPanelCorrespondienteEnRentiCar() {
+    @Then("the user is redirected to their RentiCar dashboard")
+    public void verifyDashboardRedirect() {
         wait.until(ExpectedConditions.or(
                 ExpectedConditions.urlContains("/my-vehicles"),
                 ExpectedConditions.urlContains("/dashboard")

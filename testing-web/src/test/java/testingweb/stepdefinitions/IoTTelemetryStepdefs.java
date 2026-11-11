@@ -16,8 +16,8 @@ public class IoTTelemetryStepdefs {
     private final WebDriver webDriver = MyWebDriver.getWebDriver();
     private final WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
-    @Given("El usuario autenticado abre el panel de rastreo IoT del vehiculo {string}")
-    public void elUsuarioAutenticadoAbreElPanelDeRastreoIoTDelVehiculo(String vehicleId) {
+    @Given("the authenticated user opens the IoT tracking panel for vehicle {string}")
+    public void openIoTTrackingPanel(String vehicleId) {
         webDriver.get(MyWebDriver.BASE_URL + "/login");
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email"))).sendKeys("estefano.solis@codexa.pe");
         webDriver.findElement(By.id("password")).sendKeys("admin123");
@@ -27,14 +27,14 @@ public class IoTTelemetryStepdefs {
         webDriver.get(MyWebDriver.BASE_URL + "/tracking/" + vehicleId);
     }
 
-    @When("El mapa Leaflet y los sensores de telemetria terminan de cargar")
-    public void elMapaLeafletYLosSensoresDeTelemetriaTerminanDeCargar() {
+    @When("the Leaflet map and telemetry sensors finish loading")
+    public void waitForMapAndTelemetry() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#map.leaflet-container")));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.status-panel")));
     }
 
-    @Then("Se visualiza el marcador del vehiculo en el mapa y el panel de estado")
-    public void seVisualizaElMarcadorDelVehiculoEnElMapaYElPanelDeEstado() {
+    @Then("the vehicle marker is displayed on the map along with the status panel")
+    public void verifyMarkerAndStatusPanel() {
         Assertions.assertTrue(webDriver.findElement(By.cssSelector("#map.leaflet-container")).isDisplayed());
         Assertions.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".leaflet-marker-icon"))).isDisplayed());
         Assertions.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".status-panel .status-badge"))).isDisplayed());

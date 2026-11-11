@@ -1,9 +1,9 @@
-Feature: El app permite el registro de nuevo usuario
+Feature: User Sign Up
   Background:
-    Given El usuario ingresa a la aplicacion RentiCar
+    Given the user opens the RentiCar application
 
-  Scenario: Registro de nuevo usuario en la plataforma
-    Given Hace click en el enlace Registrate del formulario
-    When Ingresa los datos requeridos de nombre, correo, contrasena y rol
-    And Hace click en el boton Registrarse
-    Then El usuario es registrado en el sistema exitosamente
+  Scenario: Successful new user registration
+    Given the user clicks on the Register link
+    When the user fills in valid name, email, password, and role
+    And the user clicks the Register button
+    Then the user is registered successfully in the system

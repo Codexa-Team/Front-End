@@ -21,8 +21,8 @@ public class RegisterVehicleStepdefs {
     private final WebDriver webDriver = MyWebDriver.getWebDriver();
     private final WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
-    @Given("El arrendador inicia sesion y navega al formulario de publicacion")
-    public void elArrendadorIniciaSesionYNavegaAlFormularioDePublicacion() {
+    @Given("the owner signs in and navigates to the publish vehicle form")
+    public void signInAndNavigateToPublishForm() {
         webDriver.get(MyWebDriver.BASE_URL + "/login");
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email"))).sendKeys("estefano.solis@codexa.pe");
         webDriver.findElement(By.id("password")).sendKeys("admin123");
@@ -33,16 +33,16 @@ public class RegisterVehicleStepdefs {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("brand")));
     }
 
-    @When("Ingresa los datos del vehiculo marca {string}, modelo {string}, anio {string} y precio {string}")
-    public void ingresaLosDatosDelVehiculo(String brand, String model, String year, String price) {
+    @When("the owner enters vehicle brand {string}, model {string}, year {string}, and daily price {string}")
+    public void enterVehicleDetails(String brand, String model, String year, String price) {
         webDriver.findElement(By.id("brand")).sendKeys(brand);
         webDriver.findElement(By.id("model")).sendKeys(model);
         webDriver.findElement(By.id("year")).sendKeys(year);
         webDriver.findElement(By.id("pricePerDay")).sendKeys(price);
     }
 
-    @And("Adjunta la imagen del vehiculo")
-    public void adjuntaLaImagenDelVehiculo() throws URISyntaxException {
+    @And("the owner uploads the vehicle image")
+    public void uploadVehicleImage() throws URISyntaxException {
         URL resource = getClass().getClassLoader().getResource("car-sample.jpg");
         Assertions.assertNotNull(resource, "Sample car image resource not found");
         String absolutePath = new File(resource.toURI()).getAbsolutePath();
@@ -50,13 +50,13 @@ public class RegisterVehicleStepdefs {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.image-preview")));
     }
 
-    @And("Hace click en el boton Publicar Vehiculo")
-    public void haceClickEnElBotonPublicarVehiculo() {
+    @And("the owner clicks the Publish Vehicle button")
+    public void clickPublishVehicleButton() {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button.submit-button"))).click();
     }
 
-    @Then("El vehiculo {string} aparece registrado en Mis Vehiculos")
-    public void elVehiculoApareceRegistradoEnMisVehiculos(String expectedVehicleTitle) {
+    @Then("the vehicle {string} appears in My Vehicles")
+    public void verifyVehicleInMyVehicles(String expectedVehicleTitle) {
         Alert alert = wait.until(ExpectedConditions.alertIsPresent());
         Assertions.assertNotNull(alert.getText());
         alert.accept();

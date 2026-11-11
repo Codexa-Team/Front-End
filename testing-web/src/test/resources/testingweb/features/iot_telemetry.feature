@@ -1,7 +1,7 @@
-Feature: El app permite el monitoreo de telemetria IoT vehicular
+Feature: IoT Vehicle Telemetry Monitoring
   Background:
-    Given El usuario autenticado abre el panel de rastreo IoT del vehiculo "1"
+    Given the authenticated user opens the IoT tracking panel for vehicle "1"
 
-  Scenario: Visualizacion de posicion GPS y telemetria en tiempo real
-    When El mapa Leaflet y los sensores de telemetria terminan de cargar
-    Then Se visualiza el marcador del vehiculo en el mapa y el panel de estado
+  Scenario: Real-time GPS location and telemetry monitoring
+    When the Leaflet map and telemetry sensors finish loading
+    Then the vehicle marker is displayed on the map along with the status panel

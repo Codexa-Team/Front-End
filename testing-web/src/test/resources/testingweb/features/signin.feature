@@ -1,8 +1,8 @@
-Feature: El app permite el inicio de sesion de usuario
+Feature: User Sign In
   Background:
-    Given El usuario ingresa a la pantalla de inicio de sesion
+    Given the user opens the login page
 
-  Scenario: Inicio de sesion exitoso con credenciales validas
-    When Ingresa el correo "estefano.solis@codexa.pe" y la contrasena "admin123"
-    And Hace click en el boton Ingresar
-    Then El usuario ingresa a su panel correspondiente en RentiCar
+  Scenario: Successful login with valid credentials
+    When the user enters email "estefano.solis@codexa.pe" and password "admin123"
+    And the user clicks the Sign In button
+    Then the user is redirected to their RentiCar dashboard
