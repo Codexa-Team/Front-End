@@ -25,4 +25,18 @@ export class SidebarComponent {
   constructor(private authService: AuthService) {
     this.currentUser$ = this.authService.currentUser$;
   }
+
+  isOwner(user: any): boolean {
+    if (!user) return false;
+    const role = user.role || (Array.isArray(user.roles) ? user.roles[0] : '');
+    return role === 'ROLE_OWNER' || role === 'ROLE_ARRENDADOR' || 
+           (Array.isArray(user.roles) && user.roles.some((r: string) => r === 'ROLE_OWNER' || r === 'ROLE_ARRENDADOR'));
+  }
+
+  isRenter(user: any): boolean {
+    if (!user) return false;
+    const role = user.role || (Array.isArray(user.roles) ? user.roles[0] : '');
+    return role === 'ROLE_RENTER' || role === 'ROLE_ARRENDATARIO' || 
+           (Array.isArray(user.roles) && user.roles.some((r: string) => r === 'ROLE_RENTER' || r === 'ROLE_ARRENDATARIO'));
+  }
 }
