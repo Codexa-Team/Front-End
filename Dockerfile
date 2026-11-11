@@ -10,7 +10,7 @@ RUN npm run build -- --configuration=production
 
 FROM node:20-alpine
 WORKDIR /app
-RUN npm install -g http-server
+RUN npm install -g serve
 COPY --from=build /app/dist/renticar-frontend/browser/ ./dist
 EXPOSE 80
-CMD ["http-server", "dist", "-p", "80", "--spa", "-c-1"]
+CMD ["serve", "-s", "dist", "-l", "80"]
